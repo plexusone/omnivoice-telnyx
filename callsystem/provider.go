@@ -7,9 +7,10 @@ import (
 	"sync"
 
 	"github.com/plexusone/omnivoice-core/callsystem"
-	"github.com/plexusone/omnivoice-telnyx/transport"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
+
+	"github.com/plexusone/omnivoice-telnyx/transport"
 )
 
 // Verify interface compliance at compile time.
@@ -304,4 +305,3 @@ func (p *Provider) SendSMSFrom(ctx context.Context, to, from, body string) (*cal
 		Status: string(response.Data.Direction),
 	}, nil
 }
-

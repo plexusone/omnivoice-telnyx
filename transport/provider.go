@@ -166,19 +166,19 @@ func (p *Provider) GetConnection(callControlID string) (*Connection, bool) {
 
 // Connection implements transport.Connection for Telnyx Media Streaming.
 type Connection struct {
-	id            string // call_control_id
-	streamID      string
-	wsConn        *websocket.Conn
-	provider      *Provider
-	events        chan transport.Event
-	audioIn       *audioWriter
-	audioOut      *audioReader
-	done          chan struct{}
-	mu            sync.RWMutex
-	closed        bool
-	closeOnce     sync.Once
-	remoteAddr    net.Addr
-	sequenceNum   int64
+	id          string // call_control_id
+	streamID    string
+	wsConn      *websocket.Conn
+	provider    *Provider
+	events      chan transport.Event
+	audioIn     *audioWriter
+	audioOut    *audioReader
+	done        chan struct{}
+	mu          sync.RWMutex
+	closed      bool
+	closeOnce   sync.Once
+	remoteAddr  net.Addr
+	sequenceNum int64
 }
 
 // ID returns the connection identifier (call_control_id).
@@ -241,32 +241,32 @@ func (c *Connection) RemoteAddr() net.Addr {
 // See: https://developers.telnyx.com/docs/voice/media-streaming
 
 type streamMessage struct {
-	Event        string            `json:"event"`
-	StreamID     string            `json:"stream_id,omitempty"`
-	CallControlID string           `json:"call_control_id,omitempty"`
-	Media        *mediaPayload     `json:"media,omitempty"`
-	Start        *startPayload     `json:"start,omitempty"`
-	Stop         *stopPayload      `json:"stop,omitempty"`
-	DTMF         *dtmfPayload      `json:"dtmf,omitempty"`
-	SequenceNumber int64           `json:"sequence_number,omitempty"`
+	Event          string        `json:"event"`
+	StreamID       string        `json:"stream_id,omitempty"`
+	CallControlID  string        `json:"call_control_id,omitempty"`
+	Media          *mediaPayload `json:"media,omitempty"`
+	Start          *startPayload `json:"start,omitempty"`
+	Stop           *stopPayload  `json:"stop,omitempty"`
+	DTMF           *dtmfPayload  `json:"dtmf,omitempty"`
+	SequenceNumber int64         `json:"sequence_number,omitempty"`
 }
 
 type startPayload struct {
-	StreamID      string `json:"stream_id"`
-	CallControlID string `json:"call_control_id"`
-	CallLegID     string `json:"call_leg_id"`
+	StreamID      string            `json:"stream_id"`
+	CallControlID string            `json:"call_control_id"`
+	CallLegID     string            `json:"call_leg_id"`
 	CustomParams  map[string]string `json:"custom_parameters,omitempty"`
 	MediaFormat   mediaFormat       `json:"media_format"`
 }
 
 type mediaFormat struct {
-	Encoding   string `json:"encoding"`   // "audio/x-mulaw" or "audio/x-alaw"
+	Encoding   string `json:"encoding"` // "audio/x-mulaw" or "audio/x-alaw"
 	SampleRate int    `json:"sample_rate"`
 	Channels   int    `json:"channels"`
 }
 
 type mediaPayload struct {
-	Track   string `json:"track"`   // "inbound" or "outbound"
+	Track   string `json:"track"` // "inbound" or "outbound"
 	Chunk   int64  `json:"chunk"`
 	Payload string `json:"payload"` // Base64 encoded audio
 }
