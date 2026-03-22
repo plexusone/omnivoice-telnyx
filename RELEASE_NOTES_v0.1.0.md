@@ -1,0 +1,103 @@
+# Release Notes: v0.1.0
+
+**Release Date:** 2026-03-22
+
+## Highlights
+
+Initial release of the Telnyx provider for OmniVoice, implementing CallSystem and Transport interfaces using Telnyx Call Control API and Media Streaming.
+
+## What's New
+
+### CallSystem Provider
+
+Full implementation of `callsystem.CallSystem` and `callsystem.SMSProvider` interfaces:
+
+- **Call Management**: `MakeCall`, `GetCall`, `ListCalls`, `Close`
+- **Incoming Calls**: `OnIncomingCall` handler with webhook support
+- **SMS Messaging**: `SendSMS`, `SendSMSFrom`
+
+### Call Control Features
+
+Rich call control via the Telnyx Call Control API:
+
+```go
+call, _ := provider.MakeCall(ctx, "+15559876543")
+
+// Answer/Hangup
+call.Answer(ctx)
+call.Hangup(ctx)
+
+// Media control (on *Call type)
+telnyxCall := call.(*callsystem.Call)
+telnyxCall.Speak(ctx, "Hello!", "", "")
+telnyxCall.PlayAudio(ctx, "https://example.com/audio.mp3")
+telnyxCall.StopAudio(ctx)
+
+// Media Streaming
+telnyxCall.StartMediaStreaming(ctx, "wss://your-server.com/stream")
+telnyxCall.StopMediaStreaming(ctx)
+
+// Transcription
+telnyxCall.StartTranscription(ctx, "en")
+telnyxCall.StopTranscription(ctx)
+```
+
+### Transport Provider
+
+WebSocket-based Media Streaming implementation:
+
+- **Interfaces**: `transport.Transport`, `transport.TelephonyTransport`
+- **Bidirectional Audio**: `AudioIn()` writer, `AudioOut()` reader
+- **Events**: Connected, AudioStarted, AudioStopped, DTMF, Disconnected
+- **Synchronization**: `SendMark()`, `Clear()` for audio buffer control
+
+### SMS Support
+
+Send SMS messages via the SMSProvider interface:
+
+```go
+// Using default phone number
+msg, _ := provider.SendSMS(ctx, "+15559876543", "Hello!")
+
+// From specific number
+msg, _ = provider.SendSMSFrom(ctx, "+15559876543", "+15551234567", "Hello!")
+```
+
+## Dependencies
+
+| Package | Version |
+|---------|---------|
+| github.com/plexusone/omnivoice-core | v0.6.0 |
+| github.com/team-telnyx/telnyx-go/v4 | v4.46.0 |
+| github.com/gorilla/websocket | v1.5.3 |
+
+## Getting Started
+
+```bash
+go get github.com/plexusone/omnivoice-telnyx@v0.1.0
+```
+
+```go
+import (
+    "github.com/plexusone/omnivoice-telnyx/callsystem"
+    "github.com/plexusone/omnivoice-telnyx/transport"
+)
+
+provider, err := callsystem.New(
+    callsystem.WithAPIKey("YOUR_API_KEY"),
+    callsystem.WithPhoneNumber("+15551234567"),
+    callsystem.WithConnectionID("your-connection-id"),
+)
+```
+
+## Requirements
+
+- Go 1.21+
+- Telnyx Account with API Key
+- Telnyx Connection ID for outbound calls
+- Public webhook URL for call events
+- WebSocket endpoint for Media Streaming
+
+## Full Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the complete list of changes.
