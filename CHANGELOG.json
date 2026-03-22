@@ -1,0 +1,45 @@
+{
+  "irVersion": "1.0",
+  "project": "omnivoice-telnyx",
+  "repository": "https://github.com/plexusone/omnivoice-telnyx",
+  "versioning": "semver",
+  "commitConvention": "conventional",
+  "maintainers": ["johncwang@gmail.com"],
+  "releases": [
+    {
+      "version": "v0.1.0",
+      "date": "2026-03-22",
+      "highlights": [
+        { "description": "Initial Telnyx provider for OmniVoice with CallSystem, Transport, and SMS support" }
+      ],
+      "added": [
+        { "description": "Telnyx CallSystem provider implementing `callsystem.CallSystem` interface", "commit": "faf962a" },
+        { "description": "Telnyx SMSProvider implementing `callsystem.SMSProvider` interface", "commit": "faf962a" },
+        { "description": "`MakeCall`, `GetCall`, `ListCalls` for call management", "commit": "faf962a" },
+        { "description": "`OnIncomingCall` handler for inbound calls with webhook support", "commit": "faf962a" },
+        { "description": "`SendSMS` and `SendSMSFrom` for SMS messaging", "commit": "faf962a" },
+        { "description": "Call Control API integration: Answer, Hangup, Speak, PlayAudio", "commit": "faf962a" },
+        { "description": "Media Streaming support: `StartMediaStreaming`, `StopMediaStreaming`", "commit": "faf962a" },
+        { "description": "Real-time transcription: `StartTranscription`, `StopTranscription`", "commit": "faf962a" },
+        { "description": "Telnyx Media Streaming transport implementing `transport.Transport` interface", "commit": "c62b82d" },
+        { "description": "Telnyx TelephonyTransport implementing `transport.TelephonyTransport` interface", "commit": "c62b82d" },
+        { "description": "WebSocket-based bidirectional audio via `AudioIn()` and `AudioOut()` streams", "commit": "c62b82d" },
+        { "description": "DTMF event handling with `OnDTMF` callback", "commit": "c62b82d" },
+        { "description": "`SendMark` and `Clear` for audio synchronization", "commit": "c62b82d" }
+      ],
+      "documentation": [
+        { "description": "README with usage examples, architecture diagram, and configuration", "commit": "01dae50" },
+        { "description": "v0.1.0 release notes with feature highlights", "commit": "01dae50" }
+      ],
+      "build": [
+        { "description": "MIT LICENSE file", "commit": "d19637d" },
+        { "description": "Shared CI workflows for lint, test, and SAST", "commit": "2f1d1e1" }
+      ],
+      "dependencies": [
+        { "description": "`github.com/plexusone/omnivoice-core` v0.6.0", "commit": "603cc31" },
+        { "description": "`github.com/team-telnyx/telnyx-go/v4` v4.51.0", "commit": "eb30032" },
+        { "description": "`github.com/gorilla/websocket` v1.5.3", "commit": "603cc31" }
+      ]
+    }
+  ]
+}
